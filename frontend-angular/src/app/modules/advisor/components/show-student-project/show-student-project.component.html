@@ -1,0 +1,120 @@
+<div class="card p-2">
+  <div class="card-body p-2">
+    <h3 class="card-title p-2">รายชื่อโครงงานของนักศึกษา</h3>
+    <label class="card-title p-2 pb-0">เลือกดูโครงงานตามภาคการศึกษาที่ลงทะเบียน</label>
+    <div class="row p-2">
+      <div class="col-md-4">
+        <label for="acad-year">ปีการศึกษา</label>
+        <select id="acad-year" class="form-select" [(ngModel)]="selectedYearSemester.year" (change)="handleSelectChange($event)">
+          <option value=""></option>
+          <option *ngFor="let item of academicYearList" [value]="item.year">{{item.year}}</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label for="acad-semester">ภาคการศึกษา</label>
+        <select id="acad-semester" class="form-select" [(ngModel)]="selectedYearSemester.semester" (change)="handleSelectChange($event)">
+          <option value=""></option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+        </select>
+      </div>
+    </div>
+    <div class="row p-2">
+      <div class="table">
+        <table class="table">
+          <thead class="table-primary text-center">
+            <tr>
+              <th scope="col" rowspan="2">#</th>
+              <th scope="col" style="width: 50%" rowspan="2">ชื่อโครงงาน</th>
+              <th scope="col" colspan="2">ภาคการศึกษา</th>
+              <th scope="col" rowspan="2">สถานะ</th>
+              <th scope="col" rowspan="2"></th>
+            </tr>
+            <tr>
+              <th scope="col">เริ่มต้น</th>
+              <th scope="col">สิ้นสุด</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of projectList; index as i">
+              <td scope="row">{{i + 1}}</td>
+              <td>{{item.name}}</td>
+              <td>{{item.startAcademicYearSemester!.year}} / {{item.startAcademicYearSemester!.semester}}</td>
+              <td>
+                {{item.finishAcademicYearSemester ? (item.finishAcademicYearSemester.year + ' / ' + item.finishAcademicYearSemester.semester) : '- / -'}}
+              </td>
+              <td>{{item.projectStatus.status}}</td>
+              <td>
+                <button [id]="'showDetail'+i" class="btn btn-outline-info btn-sm"
+                  type="button" data-bs-toggle="modal" data-bs-target="#showDetailModal" (click)="toggleOpenModal(true, item.id)"
+                >
+                  more
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<app-show-detail [openModal]="openModal" [project]="selectedProject" (event)="toggleOpenModal($event, 0)"></app-show-detail>
+<!-- <div class="modal fade" id="showDetailModal" aria-labelledby="showDetailModalLabel" aria-hidden="true" aria-modal="true" tabindex="-1">
+  <div class="modal-dialog modal-dialog-scrollable modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="showDetailModalLabel">รายละเอียดโครงงานของนักศึกษา</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container-md">
+          <div class="col-md-12" style="margin-bottom: 2rem">
+            <div class="row">
+              <div class="col-sm-4">
+                <label for="studentId">รหัสนักศึกษา</label>
+                <input disabled type="text" id="studentId" class="form-control"
+                  [value]="selectedDefenseRequest.projectStudent.student.studentPid">
+              </div>
+              <div class="col-sm-6">
+                <label for="studentName">ชื่อ - นามสกุล</label>
+                <input disabled type="text" id="studentName" class="form-control"
+                  [value]="selectedDefenseRequest.projectStudent.student.studentPid + ' ' + selectedDefenseRequest.projectStudent.student.nameTitle.title + selectedDefenseRequest.projectStudent.student.firstName + ' ' + selectedDefenseRequest.projectStudent.student.lastName">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <label for="semester">ลงทะเบียนภาคเรียนที่</label>
+                <input disabled type="text" id="semester" class="form-control"
+                  [value]="selectedDefenseRequest.requestAcademicYearSemester.semester">
+              </div>
+              <div class="col-sm-6">
+                <label for="year">ปึการศึกษา</label>
+                <input disabled type="text" id="year" class="form-control"
+                  [value]="selectedDefenseRequest.requestAcademicYearSemester.year">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <label for="projectName">ชื่อหัวข้อโครงงาน</label>
+                <input disabled type="text" id="projectName" class="form-control"
+                  [value]="selectedDefenseRequest.projectStudent.project.name">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <label for="advisor">อาจารย์ที่ปรึกษา</label>
+                <input disabled type="text" id="advisor" class="form-control" [value]="selectedDefenseRequest.projectStudent.project.advisor.academicNameTitle.title + ' ' +
+                  selectedDefenseRequest.projectStudent.project.advisor.nameTitle.title + 
+                  selectedDefenseRequest.projectStudent.project.advisor.firstName + ' ' +
+                  selectedDefenseRequest.projectStudent.project.advisor.lastName">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->

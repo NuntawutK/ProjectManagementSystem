@@ -1,0 +1,36 @@
+<nav class="navbar navbar-dark bg-dark sticky-top d-flex d-flex-row" style="padding: 12px">
+  <button id="navbarToggler" aria-label="navbar-toggler" type="button" class="navbar-toggler mx-2" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="px-1 pt-1">
+    <a class="navbar-brand text-light d-none d-sm-block" href="student">CPE Project Management - Student</a>
+    <a class="navbar-brand text-light d-sm-none" href="student">CPE Project (Student)</a>
+  </div>
+  <div class="offcanvas offcanvas-start text-bg-dark" style="--bs-offcanvas-width: 300px" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+    <div class="offcanvas-header pl-2">
+      <div class="offcanvas-title" id="offcanvasDarkNavbarLabel">
+        <h5>{{student?.studentPid}}<br/>{{student?.nameTitle?.title}}{{student?.firstName}}  {{student?.lastName}}</h5>
+        <p>นักศึกษา</p>
+      </div>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <ul class="navbar-nav" style="padding-left: 2rem;">
+        <li class="nav-item" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar">
+          <a class="nav-link" routerLink="project-meeting" routerLinkActive="active">การเข้าพบอาจารย์ที่ปรึกษาโครงงาน</a>
+        </li>
+        <li class="nav-item" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar">
+          <a class="nav-link" routerLink="project-defense" routerLinkActive="active">ขอขึ้นสอบโครงงาน</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="dropdown mx-2">
+    <button id="dropdownMenu" aria-label="dropdown-menu" type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-person-circle"></i>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end">
+      <li><a class="dropdown-item" (click)="logout()">ออกจากระบบ</a> </li>
+    </ul>
+  </div>
+</nav>

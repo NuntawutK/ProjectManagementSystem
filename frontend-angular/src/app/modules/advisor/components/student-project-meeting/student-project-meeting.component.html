@@ -1,0 +1,53 @@
+<div class="card p-2">
+  <div class="card-body p-2">
+    <h3 class="card-title p-2">นักศึกษาพบอาจารย์ที่ปรึกษา</h3>
+    <label class="card-title p-2">
+      ในภาคการศึกษา : {{appConfig?.currentAcademicYearSemester?.semester}} / {{appConfig?.currentAcademicYearSemester?.year}} <br>
+      อาจารย์ที่ปรึกษา : {{academicNameTitle?.title}} {{nameTitle?.title}}{{firstName}}  {{lastName}}
+    </label>
+    <div class="container-lg">
+      <div *ngFor="let item of projectList" class="row p-2">
+        <div class="col-md-12">
+          <div class="card p-3" style="border-color: #000000">
+            <label>ชื่อโครงงาน : {{item.name}}</label>
+            <label>เริ่มทำโครงงาน : {{item.startAcademicYearSemester!.semester}} / {{item.startAcademicYearSemester!.year}}</label>
+            <p>การเข้าพบอาจารย์ที่ปรึกษา</p>
+            <div *ngFor="let itemStd of item.projectStudents" class="card" style="margin-bottom: 1rem; padding: 1rem; border-color: dimgray;">
+              <label style="margin-bottom: 0.5rem">นักศึกษา : {{itemStd.student.studentPid}} {{itemStd.student.nameTitle.title}}{{itemStd.student.firstName}}&nbsp;{{itemStd.student.lastName}}</label>
+              <div class="table-responsive-lg">
+                <table id="meeting-detail" class="table table-sm table-bordered mb-0">
+                  <thead class="table-info">
+                    <tr class="text-center">
+                      <th scope="col">#</th>
+                      <th scope="col">สิ่งที่ได้รับมอบหมาย</th>
+                      <th scope="col">สิ่งที่ทำเสร็จแล้ว</th>
+                      <th scope="col">ภาคการศึกษา</th>
+                      <th scope="col">สถานะ</th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let m_item of itemStd.projectMeetings; index as i">
+                      <td scope="row">{{i + 1}}</td>
+                      <td style="min-width: 200px; white-space: pre-wrap;">{{m_item.assignmentToDo}}</td>
+                      <td style="min-width: 200px; white-space: pre-wrap;">{{m_item.assignmentDone}}</td>
+                      <td>{{m_item.assignmentAcademicYearSemester.year}} / {{m_item.assignmentAcademicYearSemester.semester}}</td>
+                      <td>{{m_item.projectMeetingStatus.status}}</td>
+                      <td>
+                        <button *ngIf="m_item.projectMeetingStatus.status === 'อยู่ระหว่างการตรวจทาน'" 
+                          class="btn btn-sm btn-outline-primary" (click)="submitConfirmation(m_item.id)"
+                        >
+                          ยืนยัน
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+<div class="card p-2">
+  <div class="card-body p-2">
+    <h3 class="card-title p-2">รายการขอขึ้นสอบโครงงานของนักศึกษา</h3>
+    <div class="container-lg">
+      <div class="row">
+        <div class="col-md-3" *ngFor="let item of checkboxSelector">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" [checked]="item.checked"
+              [id]="item.id" [value]="item.value" (change)="handleCheckbox($event)">
+            <label [for]="item.id">{{item.labelName}}</label>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive-md">
+        <table class="table">
+          <thead style="text-align: center">
+            <tr>
+              <th rowspan="2">นักศึกษา</th>
+              <th rowspan="2" style="min-width: 200px">ชื่อโครงงาน</th>
+              <th colspan="2">ภาคการศึกษา</th>
+              <th rowspan="2" >สถานะ</th>
+              <th rowspan="2" ></th>
+            </tr>
+            <tr>
+              <th>ลงทะเบียน</th>
+              <th>ขอขึ้นสอบ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of filteredProjectDefenseRequestList; index as i">
+              <td>
+                {{item.projectStudent.student.studentPid}}&nbsp;-&nbsp;
+                {{item.projectStudent.student.nameTitle.title}}{{item.projectStudent.student.firstName}}&nbsp;
+                {{item.projectStudent.student.lastName}}
+              </td>
+              <td>{{item.projectStudent.project.name}}</td>
+              <td>{{item.projectStudent.project.startAcademicYearSemester!.semester}} / {{item.projectStudent.project.startAcademicYearSemester!.year}}</td>
+              <td>{{item.requestAcademicYearSemester.semester}} / {{item.requestAcademicYearSemester.year}}</td>
+              <td>{{item.projectDefenseRequestStatus.status}}</td>
+              <td>
+                <app-see-request-detail
+                  [selectedDefenseRequest]="item"
+                  [index]="i"
+                ></app-see-request-detail>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

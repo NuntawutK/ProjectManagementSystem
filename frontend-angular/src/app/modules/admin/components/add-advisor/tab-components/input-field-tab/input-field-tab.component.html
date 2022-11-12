@@ -1,0 +1,53 @@
+<form [formGroup]="advisorForm">
+  <div class="row">
+    <div class="form-group col-md-6 my-2">
+      <label for="acad-name-title">คำนำหน้าชื่อทางวิชาการ</label>
+      <select id="acad-name-title" class="form-select input-sm" formControlName="acadNameTitleId">
+        <option *ngFor="let item of acadNameTitleList" [hidden]="item.title === ''" [value]="item.id">
+          {{item.title}}
+        </option>
+      </select>
+    </div>
+    <div class="form-group col-md-6 my-2">
+      <label for="name-title">คำนำหน้าชื่อ</label>
+      <select id="name-title" class="form-select" formControlName="nameTitleId">
+        <option *ngFor="let item of nameTitleList" [value]="item.id" 
+          [hidden]="item.title !== '' && item.title !== 'ดร.'" 
+        >
+          {{item.title}}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-md-6 my-2">
+      <label>ชื่อ</label>
+      <input type="text" class="form-control" formControlName="firstName">
+    </div>
+    <div class="form-group col-md-6 my-2">
+      <label>นามสกุล</label>
+      <input type="text" class="form-control" formControlName="lastName">
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-md-6 my-2">
+      <label>อีเมล</label>
+      <input type="text" class="form-control" formControlName="email">
+    </div>
+    <div class="form-group col-md-6 my-2">
+      <label>รหัสประจำตัวพนักงาน</label>
+      <input type="text" class="form-control" formControlName="advisorPid">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 my-2">
+      <div class="float-end">
+        <button class="btn btn-secondary" type="button" (click)="onReset()">ล้างข้อมูล</button>&nbsp;
+        <button *ngIf="!loading" class="btn btn-primary" type="submit" (click)="onSubmit()">บันทึก </button>
+        <button *ngIf="loading" class="btn btn-primary" type="button" disabled>
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

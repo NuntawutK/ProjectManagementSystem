@@ -1,0 +1,132 @@
+<div class="card p-2">
+  <div class="card-body p-2">
+    <div class="row">
+      <div class="col-6">
+        <h3 class="card-title p-2">การขอขึ้นสอบโครงงาน</h3>
+      </div>
+      <div class="col-6 align-self-center">
+        <a class="btn btn-sm btn-secondary float-end" role="button" routerLink="../">กลับ</a>
+      </div>
+    </div>
+    <div class="row p-2">
+      <div class="col-md-12 p-3" *ngIf="projectStudentList.length > 1">
+        <label for="select-project">เลือกโครงงาน</label>
+        <select id="select-project" class="form-select" (change)="handleSelectChange($event)">
+          <option [value]="" selected></option>
+          <option *ngFor="let item of projectStudentList; index as i" [value]="i" 
+            [disabled]="item.project.projectStatus.status !== 'กำลังดำเนินการ' && item.project.projectStatus.status !== 'การประเมินยังไม่สิ้นสุด (P)'"
+          >
+            <b>ชื่อ:</b> {{item.project.name}} |
+            <b>ภาคการศึกษา:</b> {{item.project.startAcademicYearSemester!.year}}
+            /
+            {{item.project.startAcademicYearSemester!.semester}}&nbsp;
+            ({{item.project.projectStatus.status}})
+          </option>
+        </select>
+      </div>
+      <div *ngIf="selectedProjectStudent" class="col-12-md">
+        <div class="card" style="padding: 24px">
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <label style="margin-bottom: 2rem">
+                เอกสารติดตามการเข้าพบอาจารย์ที่ปรึกษา<br/>
+                523480 COMPUTER ENGINEERING PROJECT<br/>
+                สาขาวิชาวิศวกรรมคอมพิวเตอร์ มหาวิทยาลัยเทคโนโลยีสุรนารี<br/>
+              </label>
+            </div>
+            <hr>
+            <div class="col-md-12" style="margin-bottom: 2rem">
+              <div class="row">
+                <div class="col-sm-4">
+                  <label for="studentId">รหัสนักศึกษา</label>
+                  <input disabled type="text" id="studentId" class="form-control" [value]="studentPid" >
+                </div>
+                <div class="col-sm-6">
+                  <label for="studentName">ชื่อ - นามสกุล</label>
+                  <input disabled type="text" id="studentName" class="form-control" [value]="studentFullName" >
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-4">
+                  <label for="semester">ลงทะเบียนภาคเรียนที่</label>
+                  <input disabled type="text" id="semester" class="form-control" [value]="projectStartSemester" >
+                </div>
+                <div class="col-sm-6">
+                  <label for="year">ปึการศึกษา</label>
+                  <input disabled type="text" id="year" class="form-control" [value]="projectStartYear" >
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <label for="projectName">ชื่อหัวข้อโครงงาน</label>
+                  <input disabled type="text" id="projectName" class="form-control" [value]="projectName" >
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <label for="advisor">อาจารย์ที่ปรึกษา</label>
+                  <input disabled type="text" id="advisor" class="form-control" [value]="advisorFullName" >
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="col-md-12 p-2">
+              <label class="mb-2">การเข้าพบอาจารย์ที่ปรึกษา</label>
+              <div class="table-responsive">
+                <table class="table table-bordered">
+                  <thead class="table-secondary">
+                    <tr class="text-center">
+                      <th scope="col">ครั้งที่</th>
+                      <th scope="col">สิ่งที่ได้รับมอบหมาย</th>
+                      <th scope="col">สิ่งที่ทำเสร็จแล้ว</th>
+                      <th scope="col">ภาคการศึกษา</th>
+                      <th scope="col">สถานะ</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of projectMeetings; index as i">
+                      <td scope="row" class="text-center">{{i + 1}}</td>
+                      <td style="min-width: 200px; white-space: pre-wrap;">{{item.assignmentToDo}}</td>
+                      <td style="min-width: 200px; white-space: pre-wrap;">{{item.assignmentDone}}</td>
+                      <td>{{item.assignmentAcademicYearSemester.year}} / {{item.assignmentAcademicYearSemester.semester}}</td>
+                      <td>{{item.projectMeetingStatus.status}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <hr>
+            <div class="col-md-12">
+              <form>
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;ข้าพเจ้า<u> {{studentFullName}} </u>ขอรับรองว่า โครงงานเรื่อง<u> {{projectName}} </u>ซึ่งได้นำเสนอเพื่อขอขึ้นสอบโครงงานในครั้งนี้</p>
+                <div class="form-check" style="padding-left: 5rem">
+                  <div style="margin-bottom: 16px">
+                    <input id="isNotPartOfSubject" class="form-check-input" type="radio" [checked]="partOfSubject === false" (click)="toggleRadioChange(false)">
+                    <label for="isNotPartOfSubject">ไม่เป็นส่วนหนึ่งของโครงงานในรายวิชาใด ๆ</label>
+                  </div>
+                  <div class="align-items-center" style="margin-bottom: 16px">
+                    <input id="isPartOfSubject" class="form-check-input" type="radio" [checked]="partOfSubject === true" (click)="toggleRadioChange(true)">
+                    <div class="row">
+                      <div class="col-auto">
+                        <label for="isPartOfSubject" class="col-form-label pt-0">เป็นส่วนหนึ่งของโครงงานในรายวิชา</label>
+                      </div>
+                      <div class="col">
+                        <input [disabled]="!partOfSubject" type="text" name="partOfSubjectName" class="form-control form-control-sm mr-auto" [(ngModel)]="partOfSubjectName">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="col-md-12">
+              <button class="btn btn-primary" (click)="submit()">
+                บันทึก
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>

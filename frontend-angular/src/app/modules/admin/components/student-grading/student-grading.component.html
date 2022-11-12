@@ -1,0 +1,66 @@
+<div class="card p-2">
+  <div class="card-body p-1">
+    <div class="row" style="padding: 1rem">
+      <div class="col-sm-6">
+        <h3 class="card-title p-1">จัดการผลการสอบ</h3>
+      </div>
+      <div class="col-sm-6 align-self-center">
+        <a class="btn btn-sm btn-danger float-end" role="button" routerLink="history">ประวัติผลการเรียน</a>
+      </div>
+      <label>ภาคการศึกษาที่บันทึกผลการเรียน</label>
+      <div class="col-sm-4">
+        <label for="year">ปีการศึกษา</label>
+        <select id="year" class="form-select" disabled>
+          <option selected>{{appConfig?.currentAcademicYearSemester?.year}}</option>
+        </select>
+      </div>
+      <div class="col-sm-4">
+        <label for="semester">ภาคการศึกษา</label>
+        <select id="semester" class="form-select" disabled>
+          <option selected>{{appConfig?.currentAcademicYearSemester?.semester}}</option>
+        </select>
+      </div>
+      <div class="col-sm-12" style="margin-top: 2rem">
+        <div class="table-responsive-md">
+          <table class="table table-striped" style="border-left: 2px solid; border-right: 2px solid">
+            <thead>
+              <tr class="table-dark">
+                <th style="width: 30%">ชื่อหัวข้อโครงงาน</th>
+                <th>ภาคการศึกษาที่ลงทะเบียน</th>
+                <th>อาจารย์ที่ปรึกษา</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody style="border-bottom: 3px solid">
+              <ng-container *ngFor="let item of projectList; index as i">
+                <tr style="border-top: 3px solid;">
+                  <td><b>{{item.name}}</b></td>
+                  <td><b>{{item.startAcademicYearSemester!.semester}} / {{item.startAcademicYearSemester!.year}}</b></td>
+                  <td><b>{{item.advisor.academicNameTitle.titleShort}} {{item.advisor.nameTitle.title}}{{item.advisor.firstName}}  {{item.advisor.lastName}}</b></td>
+                  <td>
+                    <select [id]="'selectGrade'+i" class="form-select form-select-sm" [(ngModel)]="item.projectStatusId">
+                      <option *ngFor="let selectItem of projectStatusList"
+                        [selected]="selectItem.id === item.projectStatusId" [ngValue]="selectItem.id"
+                      >{{selectItem.status}}</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="4">
+                    <p style="margin-top: 4px; margin-bottom: 0"><u>นักศึกษาในโครงงาน</u></p>
+                    <li *ngFor="let std of item.projectStudents">{{std.student.studentPid}} - {{std.student.nameTitle.title}}{{std.student.firstName}}  {{std.student.lastName}}</li>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <button class="btn btn-primary float-end" type="button" (click)="submit()">
+          บันทึก
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

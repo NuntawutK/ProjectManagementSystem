@@ -1,0 +1,47 @@
+<form [formGroup]="studentForm">
+  <div class="row">
+    <div class="col-md-6 d-block">
+      <div class="form-group my-2">
+        <label for="name-title">คำนำหน้าชื่อ</label>
+        <select id="name-title" class="form-select" formControlName="nameTitleId">
+          <option *ngFor="let item of nameTitleList" [hidden]="item.title === '' || item.title === 'นาง' || item.title === 'ดร.'" [value]="item.id">
+            {{item.title}}
+          </option>
+        </select>
+      </div>
+      <div class="form-group my-2">
+        <label>ชื่อ</label>
+        <input type="text" class="form-control" formControlName="firstName">
+      </div>
+      <div class="form-group my-2">
+        <label>นามสกุล</label>
+        <input type="text" class="form-control" formControlName="lastName">
+      </div>
+    </div>
+    <div class="col-md-6 d-block">
+      <div class="form-group my-2">
+        <label>รหัสประจำตัวนักศึกษา</label>
+        <input type="text" class="form-control" formControlName="studentPid">
+      </div>
+      <div class="form-group my-2">
+        <label for="advisor">อาจารย์ที่ปรึกษา</label>
+        <select id="advisor" class="form-select" formControlName="advisorId">
+          <option *ngFor="let item of advisorList" [value]="item.id">
+            {{item.academicNameTitle.titleShort}}&nbsp;{{item.nameTitle.title}}{{item.firstName}}&nbsp;&nbsp;{{item.lastName}}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 my-2">
+      <div class="float-end">
+        <button class="btn btn-secondary" type="button" (click)="onReset()">ล้างข้อมูล</button>&nbsp;
+        <button *ngIf="!loading" class="btn btn-primary" type="submit" (click)="onSubmit()">บันทึก </button>
+        <button *ngIf="loading" class="btn btn-primary" type="button" disabled>
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

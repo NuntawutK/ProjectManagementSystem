@@ -1,0 +1,73 @@
+<div class="card p-2">
+  <div class="card-body p-2">
+    <h3 class="card-title p-2">จัดการโครงงานของนักศึกษา</h3>
+    <div class="row p-2">
+      <h5>เลือกนักศึกษาที่จะลงทะเบียนรายวิชาโครงงานในภาคการศึกษานั้น ๆ</h5>
+      <div class="col-md-4">
+        <label for="acad-year">ปีการศึกษา</label>
+        <select id="acad-year" class="form-select" disabled>
+          <option selected>
+            {{appConfig?.currentAcademicYearSemester?.year}}
+          </option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label for="acad-semester">ภาคการศึกษา</label>
+        <select id="acad-semester" class="form-select" disabled>
+          <option selected>
+            {{appConfig?.currentAcademicYearSemester?.semester}}
+          </option>
+        </select>
+      </div>
+    </div>
+    <form>
+      <div class="row p-2">
+        <div class="col-md">
+          <label for="name">ชื่อโครงงาน</label>
+          <input id="name" type="text" class="form-control" [formControl]="name">
+        </div>
+      </div>
+    </form>
+    <div class="row p-2">
+      <div class="col-md">
+        <label>กรุณาเลือกนักศึกษา</label>
+      </div>
+      <div class="table-responsive-lg">
+        <table class="table">
+          <thead class="table-primary">
+            <tr>
+              <th scope="col" style="border-top-left-radius: var(--bs-card-border-radius)">#</th>
+              <th scope="col">#</th>
+              <th scope="col">รหัสนักศึกษา</th>
+              <th scope="col" style="border-top-right-radius: var(--bs-card-border-radius)">ชื่อ - นามสกุล</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of studentList; index as i">
+              <td scope="row">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" [checked]="isChecked(item.studentPid)" (click)="handleClick(item.studentPid)">
+                </div>
+              </td>
+              <td>{{i + 1}}</td>
+              <td>{{item.studentPid}}</td>
+              <td>{{item.nameTitle.title}}{{item.firstName}}&nbsp;&nbsp;{{item.lastName}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row p-2">
+      <div class="col-md">
+        <div class="float-end">
+          <button *ngIf="!loading" [disabled]="selectedStudents.length === 0 || name.value === ''" class="btn btn-primary" type="button" (click)="submit()">
+            บันทึก
+          </button>
+          <button *ngIf="loading" class="btn btn-primary" type="button" disabled>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

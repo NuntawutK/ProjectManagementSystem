@@ -1,0 +1,38 @@
+<div class="card p-2">
+  <div class="card-body p-2">
+    <h3 class="card-title p-2">รายชื่อนักศึกษา</h3>
+    <div class="row p-2">
+      <div class="row">
+        <div class="col-md-3" *ngFor="let item of checkboxSelector">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" [checked]="item.checked"
+              [id]="item.id" [value]="item.value" (change)="handleCheckbox($event)">
+            <label [for]="item.id">{{item.labelName}}</label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md">
+        <div class="table-responsive-lg">
+          <table class="table">
+            <thead class="table-primary">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">รหัสนักศึกษา</th>
+                <th scope="col">ชื่อ - นามสกุล</th>
+                <th *ngIf="selectedCheckboxValue === 1" scope="col">สถานะการทำโครงงาน</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of filteredStudentList; index as i">
+                <td>{{i + 1}}</td>
+                <td>{{item.studentPid}}</td>
+                <td>{{item.nameTitle.title}}{{item.firstName}}&nbsp;&nbsp;{{item.lastName}}</td>
+                <td *ngIf="selectedCheckboxValue === 1" scope="col">{{getStatus(i)}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

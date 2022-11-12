@@ -1,0 +1,168 @@
+<button [id]="'seeDetailBtn'+index" type="button" aria-label="see-detail" class="btn btn-outline-info"
+  data-bs-toggle="modal" [attr.data-bs-target]="'#requestDetailModal'+index">
+  ดูรายละเอียด
+</button>
+<div class="modal fade" [id]="'requestDetailModal'+index" aria-labelledby="requestDetailModalLabel" aria-hidden="true"
+  aria-modal="true" tabindex="-1">
+  <div class="modal-dialog modal-dialog-scrollable modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="requestDetailModalLabel">รายละเอียดการขอขึ้นสอบโครงงานของนักศึกษา</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container-md">
+          <div class="card" style="padding: 24px; border-color: black;">
+            <div class="row">
+              <div class="col-md-12 text-center">
+                <label style="margin-bottom: 2rem">
+                  เอกสารติดตามการเข้าพบอาจารย์ที่ปรึกษา<br />
+                  523480 COMPUTER ENGINEERING PROJECT<br />
+                  สาขาวิชาวิศวกรรมคอมพิวเตอร์ มหาวิทยาลัยเทคโนโลยีสุรนารี<br />
+                </label>
+              </div>
+              <hr>
+              <div class="col-md-12" style="margin-bottom: 2rem">
+                <div class="row">
+                  <div class="col-sm-4">
+                    <label for="studentId">รหัสนักศึกษา</label>
+                    <input disabled type="text" id="studentId" class="form-control"
+                      [value]="selectedDefenseRequest.projectStudent.student.studentPid">
+                  </div>
+                  <div class="col-sm-6">
+                    <label for="studentName">ชื่อ - นามสกุล</label>
+                    <input disabled type="text" id="studentName" class="form-control"
+                      [value]="selectedDefenseRequest.projectStudent.student.studentPid + ' ' + selectedDefenseRequest.projectStudent.student.nameTitle.title + selectedDefenseRequest.projectStudent.student.firstName + ' ' + selectedDefenseRequest.projectStudent.student.lastName">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-4">
+                    <label for="semester">ลงทะเบียนภาคเรียนที่</label>
+                    <input disabled type="text" id="semester" class="form-control"
+                      [value]="selectedDefenseRequest.requestAcademicYearSemester.semester">
+                  </div>
+                  <div class="col-sm-6">
+                    <label for="year">ปึการศึกษา</label>
+                    <input disabled type="text" id="year" class="form-control"
+                      [value]="selectedDefenseRequest.requestAcademicYearSemester.year">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <label for="projectName">ชื่อหัวข้อโครงงาน</label>
+                    <input disabled type="text" id="projectName" class="form-control"
+                      [value]="selectedDefenseRequest.projectStudent.project.name">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <label for="advisor">อาจารย์ที่ปรึกษา</label>
+                    <input disabled type="text" id="advisor" class="form-control" [value]="selectedDefenseRequest.projectStudent.project.advisor.academicNameTitle.title + ' ' +
+                      selectedDefenseRequest.projectStudent.project.advisor.nameTitle.title + 
+                      selectedDefenseRequest.projectStudent.project.advisor.firstName + ' ' +
+                      selectedDefenseRequest.projectStudent.project.advisor.lastName">
+                  </div>
+                </div>
+              </div>
+              <hr>
+              <div class="col-md-12 p-2">
+                <label class="mb-2">การเข้าพบอาจารย์ที่ปรึกษา</label>
+                <div class="table-responsive">
+                  <table class="table table-bordered">
+                    <thead class="table-secondary">
+                      <tr class="text-center">
+                        <th scope="col">ครั้งที่</th>
+                        <th scope="col">สิ่งที่ได้รับมอบหมาย</th>
+                        <th scope="col">สิ่งที่ทำเสร็จแล้ว</th>
+                        <th scope="col">ภาคการศึกษา</th>
+                        <th scope="col">สถานะ</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let meetingItem of selectedDefenseRequest.projectStudent.projectMeetings; index as meeting_i">
+                        <td scope="row" class="text-center">{{meeting_i + 1}}</td>
+                        <td style="min-width: 200px">{{meetingItem.assignmentToDo}}</td>
+                        <td style="min-width: 200px">{{meetingItem.assignmentDone}}</td>
+                        <td>{{meetingItem.assignmentAcademicYearSemester.year}} /
+                          {{meetingItem.assignmentAcademicYearSemester.semester}}</td>
+                        <td>{{meetingItem.projectMeetingStatus.status}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <hr>
+              <div class="col-md-12">
+                <form>
+                  <p>&nbsp;&nbsp;&nbsp;&nbsp;ข้าพเจ้า<u>
+                      {{selectedDefenseRequest.projectStudent.student.nameTitle.title}}{{selectedDefenseRequest.projectStudent.student.firstName}}
+                      {{selectedDefenseRequest.projectStudent.student.lastName}} </u>
+                    ขอรับรองว่า โครงงานเรื่อง<u> {{selectedDefenseRequest.projectStudent.project.name}}
+                    </u>ซึ่งได้นำเสนอเพื่อขอขึ้นสอบโครงงานในครั้งนี้</p>
+                  <div class="form-check" style="padding-left: 5rem">
+                    <div style="margin-bottom: 16px">
+                      <input disabled id="isNotPartOfSubject" [value]="false" class="form-check-input" type="radio"
+                        [checked]="selectedDefenseRequest.partOfSubject === false">
+                      <label for="isNotPartOfSubject">ไม่เป็นส่วนหนึ่งของโครงงานในรายวิชาใด ๆ</label>
+                    </div>
+                    <div class="align-items-center" style="margin-bottom: 16px">
+                      <input disabled id="isPartOfSubject" [value]="true" class="form-check-input" type="radio"
+                        [checked]="selectedDefenseRequest.partOfSubject === true">
+                      <div class="row">
+                        <div class="col-auto">
+                          <label for="isPartOfSubject"
+                            class="col-form-label pt-0">เป็นส่วนหนึ่งของโครงงานในรายวิชา</label>
+                        </div>
+                        <div class="col">
+                          <input disabled type="text" name="partOfSubjectName"
+                            class="form-control form-control-sm mr-auto" [value]="selectedDefenseRequest.partOfSubjectName">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="justify-content: flex-start">
+        <div class="row">
+          <div class="col-md-12">
+            <p>ความเห็นอาจารย์ที่ปรึกษาโครงงาน</p>
+            <section>
+              <div class="form-check">
+                <div style="margin-bottom: 16px">
+                  <input class="form-check-input" type="radio" [value]="true"
+                    [checked]="selectedDefenseRequest.projectDefenseRequestStatusAccepted === true" id="acceptRequest"
+                    (click)="toggleRequestStatus(true)"
+                    [disabled]="selectedDefenseRequest.projectDefenseRequestStatus.status === 'อนุมัติ' || 
+                     selectedDefenseRequest.projectDefenseRequestStatus.status === 'ไม่อนุมัติ'">
+                  <label for="acceptRequest" class="col-form-label pt-0">อนุมัติให้นักศึกษาขึ้นสอบโครงงาน</label>
+                </div>
+                <div style="margin-bottom: 16px">
+                  <input class="form-check-input" type="radio" [value]="false"
+                    [checked]="selectedDefenseRequest.projectDefenseRequestStatusAccepted === false" id="rejectRequest"
+                    (click)="toggleRequestStatus(false)"
+                    [disabled]="selectedDefenseRequest.projectDefenseRequestStatus.status === 'อนุมัติ' || 
+                     selectedDefenseRequest.projectDefenseRequestStatus.status === 'ไม่อนุมัติ'">
+                  <label for="rejectRequest" class="col-form-label pt-0">ไม่อนุมัติให้นักศึกษาขึ้นสอบโครงงาน
+                    เนื่องจาก</label>
+                  <textarea type="text" name="rejectRequestReason" [(ngModel)]="selectedDefenseRequest.projectDefenseRequestStatusMessage"
+                    rows="3" class="form-control form-control-sm"
+                    [disabled]="(selectedDefenseRequest.projectDefenseRequestStatus.status === 'อนุมัติ' || 
+                    selectedDefenseRequest.projectDefenseRequestStatus.status === 'ไม่อนุมัติ') ||
+                    selectedDefenseRequest.projectDefenseRequestStatusAccepted === true"></textarea>
+                </div>
+              </div>
+            </section>
+          </div>
+          <div class="col-md-12">
+            <button [id]="'submitBtn'+index" class="btn btn-primary" (click)="submit()"
+              [disabled]="selectedDefenseRequest.projectDefenseRequestStatus.status !== 'อยู่ระหว่างการอนุมัติ'">บันทึก</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

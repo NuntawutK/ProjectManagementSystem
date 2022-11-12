@@ -1,0 +1,39 @@
+<div class="card p-2">
+  <div class="card-body p-1">
+    <h3 class="card-title p-1">ตั้งค่าระบบ</h3>
+    <div class="card p-4">
+      <h5>ตั้งค่าภาคการศึกษาปัจจุบัน</h5>
+      <form [formGroup]="configForm">
+        <div class="row" formGroupName="currentAcademicYearSemester">
+          <div class="form-group col-md-3">
+            <label for="year">ปึการศึกษา</label>
+            <select id="year" class="form-select select-sm" formControlName="year">
+              <option *ngFor="let item of academicYearList" [value]="item.year"
+                [selected]="item.year === appConfig?.currentAcademicYearSemester?.year">{{item.year}}</option>
+            </select>
+          </div>
+          <div class="form-group col-md-3">
+            <label for="semester">ภาคการศึกษา</label>
+            <select id="semester" class="form-select select-sm" formControlName="semester">
+              <option *ngFor="let item of semesterList" [value]="item"
+                [selected]="item === appConfig?.currentAcademicYearSemester?.semester">{{item}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label for="maxProjectMeetingItems">จำนวนการเข้าพบที่ปรึกษา</label>
+            <input class="form-control" type="number" id="maxProjectMeetingItems" [value]="appConfig?.maxProjectMeetingItem" formControlName="maxProjectMeetingItem">
+          </div>
+          <div class="col-md-6 mt-2 d-flex align-items-end justify-content-end">
+            <button class="btn btn-primary" (click)="saveConfig()">
+              บันทึก
+            </button>
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>

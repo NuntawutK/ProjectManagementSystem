@@ -1,0 +1,35 @@
+<p class="p-2">นักศึกษามีโครงงานมากกว่า 1 โครงงาน กรุณาเลือกโครงงาน</p>
+<div class="table-responsive-lg">
+  <table class="table">
+    <thead class="table-dark">
+      <tr class="text-center">
+        <th scope="col" rowspan="2">ชื่อโครงงาน</th>
+        <th scope="col" colspan="2">ภาคการศึกษา</th>
+        <th scope="col" rowspan="2">สถานะโครงงาน</th>
+        <th scope="col" rowspan="2"></th>
+      </tr>
+      <tr class="text-center">
+        <th scope="col">เริ่มต้น</th>
+        <th scope="col">สิ้นสุด</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of projectStudentList; index as i">
+        <td style="width: 40%">{{item.project.name}}</td>
+        <td scope="row">{{item.project.startAcademicYearSemester!.year}} / {{item.project.startAcademicYearSemester!.semester}}</td>
+        <td>
+          {{item.project.finishAcademicYearSemester ? item.project.finishAcademicYearSemester.year + ' / ' + item.project.finishAcademicYearSemester.semester : "- / -"}}
+        </td>
+        <td>{{item.project.projectStatus.status}}</td>
+        <td>
+          <button *ngIf="item.project.projectStatus.status.includes('P') || item.project.projectStatus.status === 'กำลังดำเนินการ'" class="btn btn-outline-primary" type="button" (click)="clickSelect(i)">
+            เลือก
+          </button>
+          <button *ngIf="item.project.projectStatus.status.includes('U') || item.project.projectStatus.status.includes('S')" class="btn btn-outline-primary" type="button" (click)="clickSelect(i)">
+            ดู
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,94 @@
+<button [id]="'submitDefenseDocs'+index" class="btn btn-outline-primary btn-sm" type="button"
+  [disabled]="selectedProjectDefenseRequest.projectDefenseRequestStatus.status !== 'อนุมัติ'" data-bs-toggle="modal"
+  [attr.data-bs-target]="'#sendRequestModal'+index">
+  ส่งเอกสาร
+</button>
+<div class="modal fade" [id]="'sendRequestModal'+index" aria-labelledby="sendRequestModalLabel" aria-hidden="true" aria-modal="true" tabindex="-1">
+  <div class="modal-dialog modal-dialog-scrollable modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="sendRequestModalLabel">อัพโหลดเอกสารประกอบการนำเสนอ</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container-md">
+          <div class="card" style="padding: 24px; margin: 0.5rem; border-color: black;">
+            <div class="row">
+              <div class="col-sm-4">
+                <label for="studentId">รหัสนักศึกษา</label>
+                <input disabled type="text" id="studentId" class="form-control" 
+                  [value]="selectedProjectDefenseRequest.projectStudent.student.studentPid">
+              </div>
+              <div class="col-sm-6">
+                <label for="studentName">ชื่อ - นามสกุล</label>
+                <input disabled type="text" id="studentName" class="form-control" 
+                  [value]="selectedProjectDefenseRequest.projectStudent.student.studentPid + ' ' + selectedProjectDefenseRequest.projectStudent.student.nameTitle.title + selectedProjectDefenseRequest.projectStudent.student.firstName + ' ' + selectedProjectDefenseRequest.projectStudent.student.lastName" >
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <label for="semester">ลงทะเบียนภาคเรียนที่</label>
+                <input disabled type="text" id="semester" class="form-control" 
+                  [value]="selectedProjectDefenseRequest.requestAcademicYearSemester.semester" >
+              </div>
+              <div class="col-sm-6">
+                <label for="year">ปึการศึกษา</label>
+                <input disabled type="text" id="year" class="form-control" 
+                  [value]="selectedProjectDefenseRequest.requestAcademicYearSemester.year" >
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <label for="projectName">ชื่อหัวข้อโครงงาน</label>
+                <input disabled type="text" id="projectName" class="form-control" 
+                  [value]="selectedProjectDefenseRequest.projectStudent.project.name" >
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <label for="advisor">อาจารย์ที่ปรึกษา</label>
+                <input disabled type="text" id="advisor" class="form-control" 
+                  [value]="selectedProjectDefenseRequest.projectStudent.project.advisor.academicNameTitle.title + ' ' +
+                    selectedProjectDefenseRequest.projectStudent.project.advisor.nameTitle.title + 
+                    selectedProjectDefenseRequest.projectStudent.project.advisor.firstName + ' ' +
+                    selectedProjectDefenseRequest.projectStudent.project.advisor.lastName" >
+              </div>
+            </div>
+          </div>
+          <div class="card" style="padding: 24px; margin: 0.5rem; border-color: black;"><div class="row">
+            <div class="col-sm-12">
+              <label for="">เอกสาร</label><br/>
+              <ul>
+                <li *ngFor="let item of fileNameList; index as i">
+                  {{item.fileName}}&nbsp;
+                  <button type="button" class="btn btn-sm btn-outline-primary" (click)="openSubmittedFiles(item.id)">ดาวน์โหลด</button>&nbsp;
+                  <button type="button" class="btn btn-sm btn-outline-danger" (click)="deleteSubmittedFiles(item.id)">ลบ</button>&nbsp;
+                </li>
+              </ul>
+            </div>
+          </div>
+          </div>
+          <div class="card" style="padding: 24px; margin: 0.5rem; border-color: black;">
+            <div class="row">
+              <div class="col-sm-12">
+                <label for="">อัพโหลดเอกสาร</label><br/>
+                <input type="file" name="file" id="file" accept="application/pdf" multiple (change)="onChangeFile($event)">
+                <ul>
+                  <li *ngFor="let item of fileNameListForSubmit">{{item}}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button *ngIf="!loading" [id]="'submitDocs'+index" class="btn btn-primary" type="button" (click)="submit()">
+          บันทึก
+        </button>
+        <button *ngIf="loading" class="btn btn-primary" type="button" disabled>
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

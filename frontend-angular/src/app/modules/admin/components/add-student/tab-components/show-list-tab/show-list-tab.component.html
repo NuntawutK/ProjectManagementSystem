@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="table-responsive-lg">
+    <table class="table">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col" style="border-top-left-radius: var(--bs-card-border-radius)">#</th>
+          <th scope="col">รหัสประจำตัวนักศึกษา</th>
+          <th scope="col">ชื่อ - นามสกุล</th>
+          <th scope="col">อาจารย์ที่ปรึกษา</th>
+          <th scope="col" style="border-top-right-radius: var(--bs-card-border-radius)"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of studentList; index as i">
+          <td scope="row">{{i + 1}}</td>
+          <td>{{item.studentPid}}</td>
+          <td>
+            {{item.nameTitle.title}}{{item.firstName}}&nbsp;&nbsp;{{item.lastName}}
+          </td>
+          <td>
+            {{item.advisor.academicNameTitle.titleShort}}&nbsp;{{item.advisor.nameTitle.title}}{{item.advisor.firstName}}&nbsp;&nbsp;{{item.advisor.lastName}}
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

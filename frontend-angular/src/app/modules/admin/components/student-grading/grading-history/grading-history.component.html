@@ -1,0 +1,57 @@
+<div class="card p-2">
+  <div class="card-body p-1">
+    <div class="row" style="padding: 1rem">
+      <div class="col-sm-6">
+        <h3 class="card-title p-1">ประวัติผลการเรียน</h3>
+      </div>
+      <div class="col-sm-6">
+        <a class="btn btn-sm btn-secondary float-end" role="button" routerLink="../">กลับ</a>
+      </div>
+      <label>เลือกภาคการศึกษาเพื่อดูประวัติการให้เกรด</label>
+      <div class="col-sm-4">
+        <label for="acad-year">ปีการศึกษา</label>
+        <select id="acad-year" class="form-select" [(ngModel)]="selectedYearSemester.year" (change)="handleSelectChange($event)">
+          <option value=""></option>
+          <option *ngFor="let item of academicYearList" [value]="item.year">{{item.year}}</option>
+        </select>
+      </div>
+      <div class="col-sm-4">
+        <label for="acad-semester">ภาคการศึกษา</label>
+        <select id="acad-semester" class="form-select" [(ngModel)]="selectedYearSemester.semester" (change)="handleSelectChange($event)">
+          <option value=""></option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+        </select>
+      </div>
+      <div class="col-sm-4">
+        <button type="button" class="btn btn-sm btn-success float-end" (click)="exportGradingHistory()">
+          Export ผลการเรียน
+        </button>
+      </div>
+      <div class="table-responsive-md">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>รหัสนักศึกษา</th>
+              <th>ชื่อนักศึกษา</th>
+              <th>ชื่อหัวข้อโครงงาน</th>
+              <th>อาจารย์ที่ปรึกษา</th>
+              <th>ระดับที่ได้</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of projectDefenseResult; index as i">
+              <td>{{item.projectStudent.student.studentPid}}</td>
+              <td>{{item.projectStudent.student.nameTitle.title}}{{item.projectStudent.student.firstName}}  {{item.projectStudent.student.lastName}}</td>
+              <td>{{item.projectStudent.project.name}}</td>
+              <td>{{item.projectStudent.project.advisor.academicNameTitle.titleShort}}
+                {{item.projectStudent.project.advisor.nameTitle.title}}{{item.projectStudent.project.advisor.firstName}}  {{item.projectStudent.project.advisor.lastName}}</td>
+              <td>{{item.grade.gradeValue}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

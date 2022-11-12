@@ -1,0 +1,131 @@
+<div class="modal fade" id="showDetailModal" data-bs-backdrop="static" data-bs-keyboard="false"
+  aria-labelledby="showDetailModalLabel" aria-hidden="true" aria-modal="true" tabindex="-1"
+>
+  <div class="modal-dialog modal-dialog-scrollable modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="showDetailModalLabel">รายละเอียดโครงงานของนักศึกษา</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="onCloseModal()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container-md">
+          <div class="col-md-12" style="margin-bottom: 2rem">
+            <div class="row">
+              <div class="col-md-12 p-2">
+                <p style="margin-bottom: 8px">ชื่อ : {{project?.name}}</p>
+                <p style="margin-bottom: 8px">ภาคการศึกษาเริ่มต้น : {{project?.startAcademicYearSemester?.year ?? '-'}} / {{project?.startAcademicYearSemester?.semester ?? '-'}}</p>
+                <p style="margin-bottom: 8px">ภาคการศึกษาสิ้นสุด : {{project?.finishAcademicYearSemester?.year ?? '-'}} / {{project?.finishAcademicYearSemester?.semester ?? '-'}}</p>
+                <p style="margin-bottom: 8px">อาจารย์ที่ปรึกษา : {{project?.advisor?.academicNameTitle?.titleShort}} {{project?.advisor?.nameTitle?.title}}{{project?.advisor?.firstName}}
+                  {{project?.advisor?.lastName}}
+                </p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12" style="margin-bottom: 8px" *ngFor="let item of project?.projectStudents; index as i">
+                <div class="card">
+                  <h6 class="card-header">{{item.student.studentPid}} {{item.student.nameTitle.title}}{{item.student.firstName}} {{item.student.lastName}}</h6>
+                  <div class="card-body">
+                    <div class="accordion" [id]="'projectStudentDetail'+i">
+                      <div class="accordion-item">
+                        <h2 class="accordion-header" [id]="'headingOne'+i">
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapseOne'+i" aria-expanded="false" aria-controls="collapseOne">
+                            การพบอาจารย์ที่ปรึกษา
+                          </button>
+                        </h2>
+                        <div [id]="'collapseOne'+i" class="accordion-collapse collapse" [attr.aria-labelledby]="'headingOne'+i" [attr.data-bs-parent]="'#projectStudentDetail'+i">
+                          <div class="accordion-body">
+                            <div class="table-responsive-md">
+                              <table class="table table-bordered">
+                                <thead class="table-info">
+                                  <tr class="text-center">
+                                    <th scope="col">สิ่งที่ได้รับมอบหมาย</th>
+                                    <th scope="col">สิ่งที่ทำเสร็จแล้ว</th>
+                                    <th scope="col">ภาคการศึกษา</th>
+                                    <th scope="col">สถานะ</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr *ngFor="let m_item of item.projectMeetings; index as i">
+                                    <td style="min-width: 200px; white-space: pre-wrap;">{{m_item.assignmentToDo}}</td>
+                                    <td style="min-width: 200px; white-space: pre-wrap;">{{m_item.assignmentDone}}</td>
+                                    <td>{{m_item.assignmentAcademicYearSemester.year}} / {{m_item.assignmentAcademicYearSemester.semester}}</td>
+                                    <td>{{m_item.projectMeetingStatus.status}}</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="accordion-item">
+                        <h2 class="accordion-header" [id]="'headingTwo'+i">
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapseTwo'+i" aria-expanded="false" aria-controls="collapseTwo">
+                            การขออนุมัติขึ้นสอบ
+                          </button>
+                        </h2>
+                        <div [id]="'collapseTwo'+i" class="accordion-collapse collapse" [attr.aria-labelledby]="'headingTwo'+i" [attr.data-bs-parent]="'#projectStudentDetail'+i">
+                          <div class="accordion-body">
+                            <div class="table-responsive-md">
+                              <table class="table table-bordered">
+                                <thead class="table-info">
+                                  <tr class="text-center">
+                                    <th scope="col">ครั้งที่</th>
+                                    <th scope="col">ภาคการศึกษา</th>
+                                    <th scope="col">สถานะ</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr *ngFor="let d_item of item.projectDefenseRequests; index as i">
+                                    <td>{{i + 1}}</td>
+                                    <td>{{d_item.requestAcademicYearSemester.year}} / {{d_item.requestAcademicYearSemester.semester}}</td>
+                                    <td>{{d_item.projectDefenseRequestStatus.status}}</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      
+                      <div class="accordion-item">
+                        <h2 class="accordion-header" [id]="'headingThree'+i">
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapseThree'+i" aria-expanded="false" aria-controls="collapseThree">
+                            ผลการสอบโครงงาน
+                          </button>
+                        </h2>
+                        <div [id]="'collapseThree'+i" class="accordion-collapse collapse" [attr.aria-labelledby]="'headingThree'+i" [attr.data-bs-parent]="'#projectStudentDetail'+i">
+                          <div class="accordion-body">
+                            <div class="table-responsive-md">
+                              <table class="table table-bordered">
+                                <thead class="table-info">
+                                  <tr class="text-center">
+                                    <th scope="col">#</th>
+                                    <th scope="col">ภาคการศึกษา</th>
+                                    <th scope="col">ผลการสอบโครงงาน</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr *ngFor="let r_item of item.projectDefenseResults; index as i">
+                                    <td>{{i + 1}}</td>
+                                    <td>{{r_item.resultAcademicYearSemester.year}} / {{r_item.resultAcademicYearSemester.semester}}</td>
+                                    <td>{{r_item.grade.gradeValue}}</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,45 @@
+<div class="row">
+  <div class="col-md-12 my-2">
+    <label for="upload-button">
+      <input type="file" (change)="onChangeCsv($event)">
+    </label>
+  </div>
+</div>
+<div class="row">
+  <div class="table-responsive-lg">
+    <table class="table">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col" style="border-top-left-radius: var(--bs-card-border-radius)">#</th>
+          <th scope="col">รหัสประจำตัวนักศึกษา</th>
+          <th scope="col">ชื่อ - นามสกุล</th>
+          <th scope="col">อาจารย์ที่ปรึกษา</th>
+          <th scope="col" style="border-top-right-radius: var(--bs-card-border-radius)"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of importedStudentData; index as i">
+          <td scope="row">{{i + 1}}</td>
+          <td>{{item.studentPid}}</td>
+          <td>{{item.nameTitle}}{{item.firstName}}  {{item.lastName}}</td>
+          <td>{{findAdvisor(item.advisorPid)}}</td>
+          <td>
+            <button class="btn btn-danger btn-sm" type="button" (click)="deleteRow(i)">
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md mt-1">
+    <div class="float-end">
+      <button *ngIf="!loading" [disabled]="importedStudentData.length === 0" class="btn btn-primary" type="submit" (click)="onSubmit()">บันทึก</button>
+      <button *ngIf="loading" class="btn btn-primary" type="button" disabled>
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+</div>

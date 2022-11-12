@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 p-2">
+      <p style="margin-bottom: 8px">ชื่อ : {{name}}</p>
+      <p style="margin-bottom: 8px">ภาคการศึกษา : {{startAcademicYearSemester!.year}} / {{startAcademicYearSemester!.semester}}</p>
+      <p style="margin-bottom: 8px">อาจารย์ที่ปรึกษา : {{advisor.academicNameTitle.titleShort}} {{advisor.nameTitle.title}}{{advisor.firstName}}
+        {{advisor.lastName}}</p>
+      <p style="margin-bottom: 8px">นักศึกษาในโครงงาน :</p>
+      <ul>
+        <li *ngFor="let std of students">{{std.studentPid}} - {{std.nameTitle.title}}{{std.firstName}}  {{std.lastName}}</li>
+      </ul>
+    </div>
+    <div class="col-md-12">
+      <app-project-meeting-table 
+        [appConfig]="appConfig"
+        [selectedProjectStudent]="selectedProjectStudent"
+      ></app-project-meeting-table>
+    </div>
+    <div *ngIf="isProjectMoreTheOne" class="col-md-12">
+      <button class="btn btn-outline-secondary" (click)="clickGoBack()">กลับ</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<div class="card p-2">
+  <div class="card-body p-2">
+    <h3 class="card-title p-1">การเข้าพบอาจารย์ที่ปรึกษาโครงงาน</h3>
+    <div class="p-2">
+      <div *ngIf="projectStudentList.length === 0">
+        <p class="p-2">{{status}}</p>
+      </div>
+      <app-project-meeting-fill 
+        *ngIf="projectStudentList.length === 1 || selectedProjectStudent"
+        [appConfig]="appConfig"
+        [selectedProjectStudent]="selectedProjectStudent"
+        [isProjectMoreTheOne]="projectMoreThanOne"
+      ></app-project-meeting-fill>
+      <app-select-project 
+        [projectStudentList]="projectStudentList"
+        (selectedEvent)="setSelectedProjectStudent($event)"
+        *ngIf="projectStudentList.length >= 2 && !selectedProjectStudent"
+      ></app-select-project>
+    </div>
+  </div>
+</div>

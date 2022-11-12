@@ -1,0 +1,53 @@
+<div class="p-2">
+  <div class="table-responsive-lg">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">ครั้งที่</th>
+          <th style="width: 30%" scope="col">สิ่งที่ได้รับมอบหมาย</th>
+          <th style="width: 30%" scope="col">สิ่งที่ทำไปแล้ว</th>
+          <th scope="col">ภาคการศึกษา</th>
+          <th scope="col">สถานะ</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of projectMeetings; index as i">
+          <td scope="row">{{i + 1}}</td>
+          <td *ngIf="item.projectMeetingStatus.status === 'กำลังกรอกข้อมูล'">
+            <textarea class="form-control" style="min-width: 200px" rows="3" [(ngModel)]="item.assignmentToDo"></textarea>
+          </td>
+          <td *ngIf="item.projectMeetingStatus.status === 'กำลังกรอกข้อมูล'">
+            <textarea class="form-control" style="min-width: 200px" rows="3" [(ngModel)]="item.assignmentDone"></textarea>
+          </td>
+          <td *ngIf="item.projectMeetingStatus.status !== 'กำลังกรอกข้อมูล'" style="min-width: 200px; white-space: pre-wrap;">
+            {{item.assignmentToDo}}
+          </td>
+          <td *ngIf="item.projectMeetingStatus.status !== 'กำลังกรอกข้อมูล'" style="min-width: 200px; white-space: pre-wrap;">
+            {{item.assignmentDone}}
+          </td>
+          <td>{{item.assignmentAcademicYearSemester.year}} / {{item.assignmentAcademicYearSemester.semester}}</td>
+          <td>{{item.projectMeetingStatus.status}}</td>
+          <td>
+            <button *ngIf="item.projectMeetingStatus.status === 'กำลังกรอกข้อมูล'" 
+              class="btn btn-sm btn-outline-primary" type="button"(click)="saveRow(i)">บันทึก</button>
+          </td>
+          <td>
+            <button *ngIf="item.projectMeetingStatus.status === 'กำลังกรอกข้อมูล' || item.projectMeetingStatus.status === 'กด (ส่ง) เพื่อบันทึกข้อมูล'" 
+              class="btn btn-sm btn-outline-danger" type="button" (click)="deleteRow(i)">ลบ</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <button [disabled]="projectMeetings.length >= appConfig.maxProjectMeetingItem" class="btn btn-sm btn-success" (click)="addRow()">เพิ่มแถว</button>
+      <button *ngIf="!loading" [disabled]="countCompletedMeeting == appConfig.maxProjectMeetingItem" class="btn btn-sm btn-primary float-end" (click)="submit()">ส่ง</button>
+      <button *ngIf="loading" class="btn btn-sm btn-primary float-end" type="button" disabled>
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+<div class="card p-2 mx-auto" style="max-width: 540px; margin-top: 24px;">
+  <div class="card-title text-center">
+    <h3>Computer Engineering Project Management System</h3>
+    <h5>For Student or Advisor</h5>
+  </div>
+  <div class="card-body text-center">
+    <div class="icon-demo" role="image" style="font-size: 10em">
+      <i class="bi bi-person-circle"></i>
+    </div>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="loginForm">
+      <div class="form-group">
+        <label for="userPid">รหัสพนักงานหรือรหัสนักศึกษา</label>
+        <input type="text" class="form-control" name="userPid" required formControlName="userPid">
+      </div>
+      <div class="form-group">
+        <label for="password">รหัสผ่าน</label>
+        <input type="password" class="form-control" name="password" required formControlName="password">
+      </div>
+      <div class="form-group mt-4 d-grid">
+        <button class="btn btn-primary" (click)="onClick()">Login</button>
+      </div>
+    </form>
+  </div>
+  <div class="card-body text-end pt-0">
+    <a routerLink="admin" routerLinkActive="active">สำหรับ Admin</a>
+  </div>
+</div>

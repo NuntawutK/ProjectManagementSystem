@@ -1,0 +1,46 @@
+<div class="card p-2">
+  <div class="card-body p-2">
+    <div class="row">
+      <div class="col-6">
+        <h3 class="card-title p-2">การขอขึ้นสอบโครงงาน</h3>
+      </div>
+      <div class="col-6 align-self-center">
+        <a class="btn btn-sm btn-danger float-end" role="button" routerLink="create">สร้าง</a>
+      </div>
+      <div class="col-md-12">
+        <div class="table-responsive">
+          <table class="table">
+            <thead class="table-secondary">
+              <tr>
+                <th scope="col">ครั้งที่</th>
+                <th scope="col">ชื่อโครงงาน</th>
+                <th scope="col">ขออนุมัติภาคเรียน</th>
+                <th scope="col">สถานะ</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of projectDefenseRequestList; index as i">
+                <td>{{i + 1}}</td>
+                <td>{{item.projectStudent.project.name}}</td>
+                <td>{{item.requestAcademicYearSemester.semester}} / {{item.requestAcademicYearSemester.year}}</td>
+                <td>{{item.projectDefenseRequestStatus.status}}</td>
+                <td>
+                  <app-see-request-detail
+                    [selectedProjectDefenseRequest]="item"
+                    [index]="i"
+                  ></app-see-request-detail>&nbsp;&nbsp;
+                  <app-submit-request-file
+                    [hidden]="item.projectDefenseRequestStatus.status !== 'อนุมัติ'"
+                    [selectedProjectDefenseRequest]="item"
+                    [index]="i"
+                  ></app-submit-request-file>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

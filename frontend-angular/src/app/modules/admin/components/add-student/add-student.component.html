@@ -1,0 +1,32 @@
+<div class="card p-2">
+  <div class="card-body p-2">
+    <h3 class="card-title p-1">จัดการรายชื่อนักศึกษา</h3>
+    <nav>
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <button class="nav-link active" id="nav-input-field-tab" data-bs-toggle="tab" data-bs-target="#nav-input-field"
+          type="button" role="tab" aria-controls="nav-input-field" aria-selected="true">บันทึกรายคน</button>
+        <button class="nav-link" id="nav-upload-file-tab" data-bs-toggle="tab" data-bs-target="#nav-upload-file"
+          type="button" role="tab" aria-controls="nav-upload-file" aria-selected="false">นำเข้ารายชื่อ (ไฟล์
+          .csv)</button>
+        <button class="nav-link" id="nav-show-list-tab" data-bs-toggle="tab" data-bs-target="#nav-show-list"
+          type="button" role="tab" aria-controls="nav-show-list" aria-selected="false"
+          (click)="clickToGetStudent()">รายชื่อทั้งหมด</button>
+      </div>
+    </nav>
+    <div class="tab-content"
+      style="padding: 2rem; border-left: 1px solid #ddd; border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; border-bottom-left-radius: var(--bs-card-border-radius); border-bottom-right-radius: var(--bs-card-border-radius)"
+      id="nav-tabContent">
+      <div class="tab-pane fade show active" id="nav-input-field" role="tabpanel" aria-labelledby="nav-input-field-tab"
+        tabindex="0">
+        <input-field-tab [nameTitleList]="nameTitleList" [advisorList]="advisorList"></input-field-tab>
+      </div>
+      <div class="tab-pane fade" id="nav-upload-file" role="tabpanel" aria-labelledby="nav-upload-file-tab"
+        tabindex="0">
+        <upload-file-tab [nameTitleList]="nameTitleList" [advisorList]="advisorList"></upload-file-tab>
+      </div>
+      <div class="tab-pane fade" id="nav-show-list" role="tabpanel" aria-labelledby="nav-show-list-tab" tabindex="0">
+        <show-list-tab [studentList]="studentList"></show-list-tab>
+      </div>
+    </div>
+  </div>
+</div>
