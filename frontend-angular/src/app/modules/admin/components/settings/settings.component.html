@@ -15,7 +15,7 @@
           <div class="form-group col-md-3">
             <label for="semester">ภาคการศึกษา</label>
             <select id="semester" class="form-select select-sm" formControlName="semester">
-              <option *ngFor="let item of semesterList" [value]="item"
+              <option *ngFor="let item of semesterList" [ngValue]="item"
                 [selected]="item === appConfig?.currentAcademicYearSemester?.semester">{{item}}</option>
             </select>
           </div>
