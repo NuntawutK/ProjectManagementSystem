@@ -59,8 +59,8 @@ func main() {
 			advisorRoutes.GET("/students", controller_advisor.ListStudent)
 
 			advisorRoutes.GET("/project/:id", controller_advisor.GetProject)
-			advisorRoutes.GET("/projects/:academicYear/:semester", controller_advisor.ListProjectByAcademicYearSemester)
 			advisorRoutes.GET("/projects/ongoing", controller_advisor.ListProjectByOnGoingStatus)
+			advisorRoutes.GET("/projects/:academicYear/:semester", controller_advisor.ListProjectByAcademicYearSemester)
 			advisorRoutes.POST("/project", controller_advisor.CreateProject)
 
 			advisorRoutes.GET("/project-students")
@@ -74,9 +74,6 @@ func main() {
 		studentRoutes := api.Group("/student", middleware.Authorizes())
 		{
 			studentRoutes.GET("/user", controller_student.GetStudent)
-
-			studentRoutes.GET("/projects")
-			studentRoutes.GET("/project")
 
 			studentRoutes.GET("/project-student", controller_student.ListProjectStudentByStudentPID)
 
